@@ -1,6 +1,5 @@
 Test
 
-Change by Avtar
 subnet 192.168.0.0 netmask 255.255.248.0
 {
 range 192.168.3.0 192.168.3.220;
