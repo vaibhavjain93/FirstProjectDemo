@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+	Author : Rahul Tiwari
+	Note:
+		For build profiles please refer following files
+			1. build.dev.properties
+			2. build.prod.properties
+		
+		Commands:
+		WAR file For Production Environment	 : mvn clean package -Pproduction
+		RPM file For Production Environment	 : mvn clean package -Pprod-rpm
+		
+		WAR file For Development Environment : mvn clean package -Pdevelopment
+		RPM file For Production Environment	 : mvn clean package -Pdev-rpm
+ -->
+ 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>in.gov.uidai</groupId>
+	<artifactId>SmsAadhaarService</artifactId>
+	<packaging>war</packaging>
+	<version>1.0</version>
+	<name>SmsAadhaarService Webapp</name>
+
+	<properties>
+		<struts2.version>2.3.4</struts2.version>
+		<tiles.version>2.1.2</tiles.version>
+		<log4j.version>1.2.15</log4j.version>
+		<junit.version>4.5</junit.version>
+		<mysql.driver.version>5.1.9</mysql.driver.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>${struts2.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>tools</artifactId>
+					<groupId>com.sun</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-config-browser-plugin</artifactId>
+			<version>${struts2.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-junit-plugin</artifactId>
+			<version>${struts2.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-tiles-plugin</artifactId>
+			<version>${tiles.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- MySQL database driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.driver.version}</version>
+		</dependency>
+
+		<!-- Hibernate framework START -->
+		<!-- Hibernate Core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.3.1.GA</version>
+		</dependency>
+		<!-- Hibernate Annotation -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.4.0.GA</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.2</version>
+		</dependency> 
+	
+		<!-- Hibernate framework END -->
+
+		<!-- Hibernate library dependency START -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.4.GA</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>4.1.4.Final</version>
+		</dependency>
+		
+		<!-- Hibernate library dependency END -->
+	
+	</dependencies>
+	
+	<!-- This Profile will build WAR file for Production Environment-->
+	<profiles>
+		<profile>
+			<id>production</id>
+			<build>
+				<finalName>${project.artifactId}</finalName>
+				<plugins>
+					<plugin>
+					    <groupId>org.apache.maven.plugins</groupId>
+					    <artifactId>maven-compiler-plugin</artifactId>
+					    <version>2.5.1</version>
+					    <configuration>
+					        <source>1.6</source>
+					        <target>1.6</target>
+					    </configuration>
+					</plugin>				
+			    </plugins>
+				<filters>
+		      		<filter>build.prod.properties</filter>
+		    	</filters>
+				<resources>
+		      		<resource>
+		        		<directory>src/main/resources</directory>
+		        		<filtering>true</filtering>
+		        		<includes>
+		          			<include>**/*.xml</include>
+		          			<include>**/*.txt</include>
+		          			<include>**/*.properties</include>
+		        		</includes>
+		      		</resource>
+		    	</resources>
+			</build>
+		</profile>
+		
+		<!-- This Profile will build WAR file for Development Environment-->
+	 	<profile>
+	 		<id>development</id>
+			<build>
+				<finalName>${project.artifactId}</finalName>
+				<plugins>
+					<plugin>
+					    <groupId>org.apache.maven.plugins</groupId>
+					    <artifactId>maven-compiler-plugin</artifactId>
+					    <version>2.5.1</version>
+					    <configuration>
+					        <source>1.6</source>
+					        <target>1.6</target>
+					    </configuration>
+					</plugin>
+			    </plugins>
+			    <filters>
+		      		<filter>build.dev.properties</filter>
+		    	</filters>
+		    	<resources>
+		      		<resource>
+		        		<directory>src/main/resources</directory>
+		        		<filtering>true</filtering>
+		        		<includes>
+		          			<include>**/*.xml</include>
+		          			<include>**/*.txt</include>
+		          			<include>**/*.properties</include>
+		        		</includes>
+		      		</resource>
+		    	</resources>
+			</build>
+		</profile>
+
+
+		<!-- This Profile will build WAR file and RPM file for Production -->
+		<profile>
+			<id>prod-rpm</id>
+			
+			<properties>
+				<rpm.install.basedir>/usr/local/apache-tomcat-6.0.26</rpm.install.basedir>
+				<rpm.install.webapps>${rpm.install.basedir}/webapps</rpm.install.webapps>
+				<rpm.install.config>/opt/uidapp/SmsAadhaarService/config</rpm.install.config>
+				
+				<rpm.os.user>uidapp</rpm.os.user>
+				<rpm.os.group>uidapp</rpm.os.group>
+				
+				<rpm.app.version>2.1</rpm.app.version>
+				<rpm.app.version.release>1</rpm.app.version.release>
+				<rpm.app.version.release.date>Mon Sept 01 2012</rpm.app.version.release.date>
+			</properties>
+			
+			<build>
+				<finalName>${project.artifactId}</finalName>
+				<filters>
+					<filter>build.prod.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.txt</include>
+							<include>**/*.properties</include>
+						</includes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+					    <groupId>org.apache.maven.plugins</groupId>
+					    <artifactId>maven-compiler-plugin</artifactId>
+					    <version>2.5.1</version>
+					    <configuration>
+					        <source>1.6</source>
+					        <target>1.6</target>
+					    </configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.2</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>war</goal>
+								</goals>
+								<phase>package</phase>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>rpm-maven-plugin</artifactId>
+						<version>2.1-alpha-2</version>
+						<extensions>true</extensions>
+						<executions>
+							<execution>
+								<goals>
+									<goal>rpm</goal>
+								</goals>
+								<phase>package</phase>
+							</execution>
+						</executions>
+						<configuration>
+							<!-- <classifier>${rpm.classifier}</classifier> -->
+							<copyright>UIDAI</copyright>
+							<distribution>Red Hat Enterprise Linux 5.0</distribution>
+							<group>UID</group>
+							<packager>${user.name} @ UIDAI, HQ</packager>
+							<version>${rpm.app.version}</version>
+							<release>${rpm.app.version.release}</release>
+							<changelogFile>* ${rpm.app.version.release.date} Rahul Tiwari  &lt;rahul.tiwari.uidai@gmail.com &gt;</changelogFile>
+							<defaultDirmode>777</defaultDirmode>
+							<defaultFilemode>777</defaultFilemode>
+							<defaultUsername>${rpm.os.user}</defaultUsername>
+							<defaultGroupname>${rpm.os.group}</defaultGroupname>
+							<requires>
+								<require>apache-tomcat &gt;= 6.0.26</require>
+							</requires>
+							<description>Provided fix for the bugs reported and new features for SmsAadhaarService Application.</description>
+							
+							<mappings>
+								<mapping>
+									<directory>${rpm.install.webapps}/SmsAadhaarService</directory>
+									<sources>
+										<source>
+											<location>target/SmsAadhaarService</location>
+										</source>
+									</sources>
+								</mapping>
+								<mapping>
+									<directory>${rpm.install.webapps}</directory>
+									<sources>
+										<source>
+											<location>target/SmsAadhaarService.war</location>
+										</source>
+									</sources>
+								</mapping>
+							</mappings>
+							<postinstallScriptlet>
+								<script>echo "WARNING: You may need to restart tomcat to ensure changes take effect."</script>
+							</postinstallScriptlet>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
+		<!-- This Profile will build WAR file and RPM file for Development -->
+		<profile>
+			<id>dev-rpm</id>
+			
+			<properties>
+				<rpm.install.basedir>/home/uidai/Desktop/apache-tomcat-7.0.28</rpm.install.basedir>
+				<rpm.install.webapps>${rpm.install.basedir}/webapps</rpm.install.webapps>
+				<rpm.install.config>/opt/uidapp/SmsAadhaarService/config</rpm.install.config>
+				
+				<rpm.os.user>uidai</rpm.os.user>
+				<rpm.os.group>uidai</rpm.os.group>
+								
+				<rpm.app.version>2.1</rpm.app.version>
+				<rpm.app.version.release>1</rpm.app.version.release>
+				<rpm.app.version.release.date>Mon Sept 01 2012</rpm.app.version.release.date>
+			</properties>
+			
+			<build>
+				<finalName>${project.artifactId}</finalName>
+				<filters>
+					<filter>build.prod.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.txt</include>
+							<include>**/*.properties</include>
+						</includes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+					    <groupId>org.apache.maven.plugins</groupId>
+					    <artifactId>maven-compiler-plugin</artifactId>
+					    <version>2.5.1</version>
+					    <configuration>
+					        <source>1.6</source>
+					        <target>1.6</target>
+					    </configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.2</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>war</goal>
+								</goals>
+								<phase>package</phase>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>rpm-maven-plugin</artifactId>
+						<version>2.1-alpha-2</version>
+						<extensions>true</extensions>
+						<executions>
+							<execution>
+								<goals>
+									<goal>rpm</goal>
+								</goals>
+								<phase>package</phase>
+							</execution>
+						</executions>
+						<configuration>
+							<!-- <classifier>${rpm.classifier}</classifier> -->
+							<copyright>UIDAI</copyright>
+							<distribution>Red Hat Enterprise Linux 5.0</distribution>
+							<group>UID</group>
+							<packager>${user.name} @ UIDAI, HQ</packager>
+							<version>${rpm.app.version}</version>
+							<release>${rpm.app.version.release}</release>
+							<changelogFile>* ${rpm.app.version.release.date} Rahul Tiwari  &lt;rahul.tiwari.uidai@gmail.com &gt;</changelogFile>
+							<defaultDirmode>777</defaultDirmode>
+							<defaultFilemode>777</defaultFilemode>
+							<defaultUsername>${rpm.os.user}</defaultUsername>
+							<defaultGroupname>${rpm.os.group}</defaultGroupname>
+							<requires>
+								<require>apache-tomcat &gt;= 6.0.26</require>
+							</requires>
+							<description>Provided fix for the bugs reported and new features for  SmsAadhaarService Application.</description>
+							
+							<mappings>
+								<mapping>
+									<directory>${rpm.install.webapps}/SmsAadhaarService</directory>
+									<sources>
+										<source>
+											<location>target/SmsAadhaarService</location>
+										</source>
+									</sources>
+								</mapping>
+								<mapping>
+									<directory>${rpm.install.webapps}</directory>
+									<sources>
+										<source>
+											<location>target/SmsAadhaarService.war</location>
+										</source>
+									</sources>
+								</mapping>
+							</mappings>
+							<postinstallScriptlet>
+								<script>echo "WARNING: You may need to restart tomcat to ensure changes take effect."</script>
+							</postinstallScriptlet>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	
+	</profiles>
+	
+</project>

@@ -1,0 +1,10 @@
+subnet 192.168.0.0 netmask 255.255.248.0
+{
+range 192.168.3.0 192.168.3.220;
+range 192.168.4.0 192.168.6.255;
+option domain-name-servers 192.168.3.254, 8.8.8.8;
+option routers 192.168.3.223;
+option broadcast-address 192.168.7.255;
+#default-lease-time 604800;
+#max-lease-time 691200;
+}
